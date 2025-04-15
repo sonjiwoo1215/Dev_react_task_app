@@ -3,7 +3,7 @@ name: Deploy to Firebase Hosting
 on:
   push:
     branches:
-      - master  # or 'main' depending on your default branch
+      - master
 
 jobs:
   deploy:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'  # Node.js 버전을 설정 (필요한 버전으로 변경)
+          node-version: '14'
 
       - name: Install dependencies
         run: |
@@ -24,10 +24,10 @@ jobs:
 
       - name: Build the project
         run: |
-          npm run build  # React 프로젝트에서 빌드 명령어를 사용합니다. 필요에 따라 변경.
+          npm run build
 
       - name: Firebase CLI setup
-        uses: wzieba/Firebase-CLI-action@v3  # 최신 버전으로 변경
+        uses: wzieba/Firebase-CLI-action@v2  # v2로 변경
 
       - name: Deploy to Firebase Hosting
         run: |
