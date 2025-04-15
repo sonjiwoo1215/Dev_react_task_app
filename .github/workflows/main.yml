@@ -1,1 +1,37 @@
 
+name: Deploy to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - master  # or 'main' depending on your default branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Node.js 버전을 설정 (필요한 버전으로 변경)
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Build the project
+        run: |
+          npm run build  # React 프로젝트에서 빌드 명령어를 사용합니다. 필요에 따라 변경.
+
+      - name: Firebase CLI setup
+        uses: wzieba/Firebase-CLI-action@v2
+        with:
+          firebase_token: ${{ secrets.FIREBASE_TOKEN }}
+
+      - name: Deploy to Firebase Hosting
+        run: |
+          firebase deploy --only hosting --token ${{ secrets.FIREBASE_TOKEN }}
