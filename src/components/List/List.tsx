@@ -10,6 +10,7 @@ import { deleteList } from "../../store/slices/boardsSlice";
 import { addLog } from "../../store/slices/loggerSlice";
 import { v4 } from "uuid";
 import { deleteButton, header, listWrapper, name } from "./List.css";
+import { Droppable } from "react-beautiful-dnd";
 
 type TListProps = {
   boardId: string;
@@ -40,33 +41,44 @@ const List: FC<TListProps> = ({ list, boardId }) => {
   };
 
   return (
-    <div className={listWrapper}>
-      <div className={header}>
-        <div className={name}>{list.listName}</div>
-        <GrSubtract
-          className={deleteButton}
-          onClick={() => handleListDelete(list.listId)}
-        />
-      </div>
-      {list.tasks.map((task, index) => (
+    <Droppable droppableId={list.listId}>
+      {(provided) => (
         <div
-          onClick={() =>
-            handleTaskChange(boardId, list.listId, task.taskId, task)
-          }
-          key={task.taskId}
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+          className={listWrapper}
         >
-          <Task
-            taskName={task.taskName}
-            taskDescription={task.taskDescription}
-            boardId={boardId}
-            id={task.taskId}
-            index={index}
-          />
-        </div>
-      ))}
+          <div className={header}>
+            <div className={name}>{list.listName}</div>
+            <GrSubtract
+              className={deleteButton}
+              onClick={() => handleListDelete(list.listId)}
+            />
+          </div>
+          {list.tasks.map((task, index) => (
+            <div
+              onClick={() =>
+                handleTaskChange(boardId, list.listId, task.taskId, task)
+              }
+              key={task.taskId}
+            >
+              <Task
+                taskName={task.taskName}
+                taskDescription={task.taskDescription}
+                boardId={boardId}
+                id={task.taskId}
+                index={index}
+              />
+            </div>
+          ))}
+          
+          {/* 드래그 앤 드롭을 자연스럽게 하기 위해 공간을 만들어주는 기능 */}
+          {provided.placeholder}
 
-      <ActionButton boardId={boardId} listId={list.listId} />
-    </div>
+          <ActionButton boardId={boardId} listId={list.listId} />
+        </div>
+      )}
+    </Droppable>
   );
 };
 
