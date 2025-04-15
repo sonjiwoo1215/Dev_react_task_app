@@ -108,6 +108,7 @@ function App() {
         </DragDropContext>
       </div>
 
+
       <div className={buttons}>
         <button className={deleteBoardButton}
         onClick={handleDeleteBoard}>이 게시판 삭제하기</button>
