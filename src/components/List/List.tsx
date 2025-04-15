@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { GrSubtract } from "react-icons/gr";
 import Task from "../Task/Task";
 import ActionButton from "../ActionButton/ActionButton";
@@ -33,7 +33,7 @@ const List: FC<TListProps> = ({ list, boardId }) => {
   const handleTaskChange = (
     boardId: string,
     listId: string,
-    taskId: string,
+    // taskId: string,
     task: ITask
   ) => {
     dispatch(setModalData({ boardId, listId, task }));
@@ -58,7 +58,7 @@ const List: FC<TListProps> = ({ list, boardId }) => {
           {list.tasks.map((task, index) => (
             <div
               onClick={() =>
-                handleTaskChange(boardId, list.listId, task.taskId, task)
+                handleTaskChange(boardId, list.listId, task)
               }
               key={task.taskId}
             >
@@ -71,7 +71,7 @@ const List: FC<TListProps> = ({ list, boardId }) => {
               />
             </div>
           ))}
-          
+
           {/* 드래그 앤 드롭을 자연스럽게 하기 위해 공간을 만들어주는 기능 */}
           {provided.placeholder}
 
