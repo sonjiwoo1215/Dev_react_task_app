@@ -1,4 +1,3 @@
-
 name: Deploy to Firebase Hosting
 
 on:
@@ -28,9 +27,7 @@ jobs:
           npm run build  # React 프로젝트에서 빌드 명령어를 사용합니다. 필요에 따라 변경.
 
       - name: Firebase CLI setup
-        uses: wzieba/Firebase-CLI-action@v2
-        with:
-          firebase_token: ${{ secrets.FIREBASE_TOKEN }}
+        uses: wzieba/Firebase-CLI-action@v3  # 최신 버전으로 변경
 
       - name: Deploy to Firebase Hosting
         run: |
